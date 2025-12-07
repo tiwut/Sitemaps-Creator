@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Lister Python Script</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        pre {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+    <script data-goatcounter="https://tiwut.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script src="https://tiwut.de/cookie.notice.js"></script>
+    <script src="https://tiwut.de/Script/enforce_https.js" defer></script>
+</head>
+<body>
 
+    <div class="container">
+        <h1>Python Directory Listing Script</h1>
+        <p>This Python script, named <code>sitemaps.py</code>, is designed to recursively list all files and folders within a specified directory and save the resulting structure to a text file. It uses the built-in <code>os</code> module, specifically <code>os.walk</code>, to traverse the directory tree.</p>
+
+        ---
+
+        <h2>Key Function: <code>list_files_and_folders</code></h2>
+        <p>The core logic resides in this function. It takes two arguments:</p>
+        <ul>
+            <li><code>directory</code>: The path of the directory to be searched (e.g., <code>"."</code> for the current directory).</li>
+            <li><code>output_file</code>: The name of the file where the list will be saved (e.g., <code>"verzeichnisliste.txt"</code>).</li>
+        </ul>
+
+        ### How it Works
+        <p>The function performs the following steps:</p>
+        <ol>
+            <li>It opens the specified <code>output_file</code> in write mode (<code>'w'</code>).</li>
+            <li>It writes a header with the absolute path of the target directory.</li>
+            <li>It uses <code>os.walk(directory)</code> to generate a 3-tuple <code>(root, dirs, files)</code> for each directory it visits:
+                <ul>
+                    <li><code>root</code>: The path to the current directory.</li>
+                    <li><code>dirs</code>: A list of subfolder names in the current directory.</li>
+                    <li><code>files</code>: A list of file names in the current directory.</li>
+                </ul>
+            </li>
+            <li>It iterates through <code>dirs</code> and <code>files</code>, writing the full path of each item to the output file using <code>os.path.join</code>.</li>
+            <li>Upon successful completion, it prints a confirmation message to the console.</li>
+            <li>It includes basic error handling for <code>FileNotFoundError</code> and general exceptions.</li>
+        </ol>
+        
+        ---
+
+        <h2>The Python Code (<code>sitemaps.py</code>)</h2>
+        <pre>
+import os
+
+def list_files_and_folders(directory, output_file):
+    """
+    Listet alle Dateien und Ordner in einem Verzeichnis und seinen Unterverzeichnissen auf
+    und speichert die Pfade in einer Ausgabedatei.
+    
+    (Lists all files and folders in a directory and its subdirectories
+    and saves the paths to an output file.)
+
+    :param directory: Der Pfad des zu durchsuchenden Verzeichnisses. (The path of the directory to be searched.)
+    :param output_file: Der Name der Datei, in der die Liste gespeichert werden soll. (The name of the file to save the list to.)
+    """
+    try:
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(f"Auflistung für das Verzeichnis: {os.path.abspath(directory)}\n")
+            f.write("="*50 + "\n\n")
+
+            for root, dirs, files in os.walk(directory):
+                f.write(f"Ordner: {root}\n")
+
+                for d in dirs:
+                    f.write(f"  -> Unterordner: {os.path.join(root, d)}\n")
+
+                for file in files:
+                    f.write(f"  -> Datei: {os.path.join(root, file)}\n")
+                
+                f.write("\n")
+
+        print(f"Die Liste der Dateien und Ordner wurde erfolgreich in '{output_file}' gespeichert.")
+
+    except FileNotFoundError:
+        print(f"Fehler: Das angegebene Verzeichnis '{directory}' wurde nicht gefunden.")
+    except Exception as e:
+        print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+
+if __name__ == "__main__":
+    target_directory = "."
+    output_filename = "verzeichnisliste.txt"
+    list_files_and_folders(target_directory, output_filename)
+        </pre>
+
+        ---
+
+        <h2>Execution</h2>
+        <p>The <code>if __name__ == "__main__":</code> block ensures the script runs the main logic when executed directly. It is set up to:</p>
+        <ul>
+            <li>Scan the **current directory** (<code>target_directory = "."</code>).</li>
+            <li>Save the output to a file named **<code>verzeichnisliste.txt</code>**.</li>
+        </ul>
+        <p>To run the script, simply execute it from your terminal:</p>
+        <pre>python sitemaps.py</pre>
+
+        <div class="footer">
+            <a href="https://tiwut.de/cookie-banner-information.html" style="color: #a0a0a0; text-decoration: none; font-size: 0.8rem;">Legal Notice</a>
+            &copy; 2025 Tiwut
+        </div>
+    </div>
+
+</body>
+</html>
