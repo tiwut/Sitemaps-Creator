@@ -1,7 +1,6 @@
 # Sitemaps-Creator
-Sitemaps 
-    Listet alle Dateien und Ordner in einem Verzeichnis und seinen Unterverzeichnissen auf
-    und speichert die Pfade in einer Ausgabedatei.
+Sitemaps
 
-    :param directory: Der Pfad des zu durchsuchenden Verzeichnisses.
-    :param output_file: Der Name der Datei, in der die Liste gespeichert werden soll.
+Lists all files and folders in a directory and its subdirectories
+
+and saves the paths in an output file.
